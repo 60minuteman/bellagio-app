@@ -1,152 +1,112 @@
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, Dimensions } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View, ScrollView, Animated, StatusBar, Platform } from 'react-native';
 import { colors, typography } from '../../styles/theme';
-import { Feather } from '@expo/vector-icons';
-import { SearchBar } from '../../components/common/SearchBar';
-import { ActionButton } from '../../components/common/ActionButton';
-import { SectionHeader } from '../../components/common/SectionHeader';
-import { FlightCard } from '../../components/common/FlightCard';
-import { OfferCard } from '../../components/common/OfferCard';
-
-const { width } = Dimensions.get('window');
+import { HomeHeader } from '../../components/common/HomeHeader';
+import { LocationHeader } from '../../components/common/LocationHeader';
+import { FlightSearchForm } from '../../components/common/FlightSearchForm';
+import { SpecialFlightCard } from '../../components/common/SpecialFlightCard';
+import { ScreenLayout } from '../../components/layout/ScreenLayout';
 
 export const HomeScreen = () => {
+  const scrollY = new Animated.Value(0);
+
+  const onScroll = Animated.event(
+    [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+    { useNativeDriver: false }
+  );
+
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <View>
-          <Text style={styles.welcomeText}>Welcome back</Text>
-          <Text style={styles.userName}>John Doe</Text>
+    <ScreenLayout 
+      statusBarStyle="light-content"
+      backgroundColor={colors.background}
+    >
+      <HomeHeader location="Abuja, Nigeria" scrollY={scrollY} />
+      
+      <Animated.ScrollView 
+        style={styles.scrollView} 
+        showsVerticalScrollIndicator={false}
+        onScroll={onScroll}
+        scrollEventThrottle={16}
+        contentContainerStyle={styles.scrollContent}
+      >
+        <View style={styles.headerContainer}>
+          <LocationHeader userName="Jane" />
         </View>
-        <TouchableOpacity style={styles.profileButton}>
-          <Text style={styles.profileInitials}>JD</Text>
-        </TouchableOpacity>
-      </View>
+        
+        <View style={styles.content}>
+          <View style={styles.searchFormContainer}>
+            <FlightSearchForm />
+          </View>
 
-      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
-        <SearchBar style={styles.searchBar} />
-
-        <View style={styles.quickActions}>
-          <SectionHeader title="Quick Actions" />
-          <View style={styles.actionButtons}>
-            <ActionButton 
-              title="Book Flight" 
-              icon="calendar"
-              style={styles.actionButton}
-            />
-            <ActionButton 
-              title="Check In" 
-              icon="check-circle"
-              style={styles.actionButton}
-            />
-            <ActionButton 
-              title="Flight Status" 
-              icon="clock"
-              style={styles.actionButton}
-            />
+          <View style={styles.specialFlights}>
+            <View style={styles.sectionHeader}>
+              <Text style={styles.sectionTitle}>Special Flights</Text>
+              <Text style={styles.seeAll}>See All</Text>
+            </View>
+            
+            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+              <SpecialFlightCard
+                title="Handpicked Destinations"
+                description="Discover exciting cities and hidden gems at special rates."
+              />
+              <SpecialFlightCard
+                title="Handpicked Destinations"
+                description="Discover exciting cities and hidden gems at special rates."
+                style={styles.secondCard}
+              />
+            </ScrollView>
           </View>
         </View>
-
-        <View style={styles.upcomingFlights}>
-          <SectionHeader 
-            title="Upcoming Flights" 
-            showSeeAll 
-            onSeeAllPress={() => {}}
-          />
-          <FlightCard 
-            fromCode="ABV"
-            toCode="LOS"
-            date="April 15, 2024 • 10:30 AM"
-            onPress={() => {}}
-          />
-        </View>
-
-        <View style={styles.specialOffers}>
-          <SectionHeader 
-            title="Special Offers" 
-            showSeeAll 
-            onSeeAllPress={() => {}}
-          />
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <OfferCard
-              title="Summer Sale"
-              description="Get 20% off on international flights"
-              onPress={() => {}}
-            />
-            <OfferCard
-              title="Weekend Deal"
-              description="Domestic flights starting at $99"
-              onPress={() => {}}
-              style={styles.secondaryOffer}
-            />
-          </ScrollView>
-        </View>
-      </ScrollView>
-    </View>
+      </Animated.ScrollView>
+    </ScreenLayout>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  scrollView: {
     flex: 1,
-    backgroundColor: '#F8FAFC',
   },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 24,
-    paddingTop: 60,
-    paddingBottom: 20,
-    backgroundColor: colors.white,
+  scrollContent: {
+    flexGrow: 1,
+    paddingBottom: Platform.select({
+      ios: 20,
+      android: 24 // Add padding for Android navigation bar
+    }),
   },
-  welcomeText: {
-    fontSize: 14,
-    fontFamily: typography.regular,
-    color: '#666',
-  },
-  userName: {
-    fontSize: 20,
-    fontFamily: typography.bold,
-    color: colors.black,
-  },
-  profileButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: colors.primary,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  profileInitials: {
-    color: colors.white,
-    fontSize: 16,
-    fontFamily: typography.medium,
+  headerContainer: {
+    width: '100%',
+    overflow: 'hidden',
+    backgroundColor: colors.background,
   },
   content: {
     flex: 1,
-    paddingHorizontal: 24,
+    marginTop: -60,
   },
-  searchBar: {
-    marginBottom: 24,
+  searchFormContainer: {
+    marginHorizontal: 20,
+    marginTop: 25,
   },
-  quickActions: {
-    marginBottom: 24,
+  specialFlights: {
+    marginTop: 24,
+    paddingHorizontal: 20,
   },
-  actionButtons: {
+  sectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
   },
-  actionButton: {
-    flex: 1,
-    marginHorizontal: 4,
+  sectionTitle: {
+    fontSize: 18,
+    fontFamily: typography.semiBold,
+    color: colors.text,
   },
-  upcomingFlights: {
-    marginBottom: 24,
+  seeAll: {
+    fontSize: 14,
+    fontFamily: typography.medium,
+    color: colors.primary,
   },
-  specialOffers: {
-    marginBottom: 24,
+  secondCard: {
+    marginLeft: 16,
   },
-  secondaryOffer: {
-    backgroundColor: '#818CF8',
-  },
-}); 
+});

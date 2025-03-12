@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Dimensions, Text, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { View, StyleSheet, Dimensions, Text, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView, StatusBar } from 'react-native';
 import { Input } from '../../components/common/Input';
 import { Button } from '../../components/common/Button';
 import { colors, typography } from '../../styles/theme';
 import { SocialButton } from '../../components/common/SocialButton';
 import { useNavigation } from '@react-navigation/native';
+import { ScreenLayout } from '../../components/layout/ScreenLayout';
 
 const { width } = Dimensions.get('window');
 
@@ -26,91 +27,92 @@ export const SignIn = () => {
   };
 
   return (
-    <KeyboardAvoidingView 
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.container}
-      keyboardVerticalOffset={Platform.OS === 'ios' ? -10 : 0}
-    >
-      <View style={styles.headerContainer}>
-        <Text style={styles.title}>Sign In</Text>
-        <Text style={styles.subtitle}>Enter your username and password to 
-        access your account.</Text>
-      </View>
-
-      <ScrollView 
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
+    <ScreenLayout>
+      <KeyboardAvoidingView 
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        style={styles.container}
       >
-        <View style={styles.content}>
-          <View style={styles.socialButtonsContainer}>
-            <SocialButton
-              type="google"
-              onPress={handleGoogleSignUp}
-              style={styles.socialButton}
-            />
-            <SocialButton
-              type="apple" 
-              onPress={handleAppleSignUp}
-              style={styles.socialButton}
-            />
-          </View>
+        <View style={styles.headerContainer}>
+          <Text style={styles.title}>Sign In</Text>
+          <Text style={styles.subtitle}>Enter your username and password to 
+          access your account.</Text>
+        </View>
 
-          <View style={styles.orContainer}>
-            <View style={styles.line} />
-            <Text style={styles.orText}>or</Text>
-            <View style={styles.line} />
-          </View>
-          
-          <View style={styles.form}>
-            <Input
-              label="Email"
-              placeholder="Enter your email"
-              value={email}
-              onChangeText={setEmail}
-              containerStyle={styles.inputContainer}
-              keyboardType="email-address"
-              autoCapitalize="none"
-            />
+        <ScrollView 
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+        >
+          <View style={styles.content}>
+            <View style={styles.socialButtonsContainer}>
+              <SocialButton
+                type="google"
+                onPress={handleGoogleSignUp}
+                style={styles.socialButton}
+              />
+              <SocialButton
+                type="apple" 
+                onPress={handleAppleSignUp}
+                style={styles.socialButton}
+              />
+            </View>
 
-            <Input
-              label="Password"
-              placeholder="Enter your password"
-              value={password}
-              onChangeText={setPassword}
-              containerStyle={styles.inputContainer}
-              secureTextEntry
-            />
+            <View style={styles.orContainer}>
+              <View style={styles.line} />
+              <Text style={styles.orText}>or</Text>
+              <View style={styles.line} />
+            </View>
             
-            <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
-              <Text style={styles.forgotPassword}>Forgot Password?</Text>
-            </TouchableOpacity>
+            <View style={styles.form}>
+              <Input
+                label="Email"
+                placeholder="Enter your email"
+                value={email}
+                onChangeText={setEmail}
+                containerStyle={styles.inputContainer}
+                keyboardType="email-address"
+                autoCapitalize="none"
+              />
 
-            <Button
-              title="Sign Up"
-              onPress={handleSignUp}
-              style={styles.button}
-            />
+              <Input
+                label="Password"
+                placeholder="Enter your password"
+                value={password}
+                onChangeText={setPassword}
+                containerStyle={styles.inputContainer}
+                secureTextEntry
+              />
+              
+              <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
+                <Text style={styles.forgotPassword}>Forgot Password?</Text>
+              </TouchableOpacity>
 
-            <View style={styles.signInContainer}>
-              <Text style={styles.signInText}>
-              Don't have an account?{' '}
-                <Text style={styles.signInLink}>Sign Up</Text>
-              </Text>
+              <Button
+                title="Sign Up"
+                onPress={handleSignUp}
+                style={styles.button}
+              />
+
+              <View style={styles.signInContainer}>
+                <Text style={styles.signInText}>
+                Don't have an account?{' '}
+                  <Text style={styles.signInLink}>Sign Up</Text>
+                </Text>
+              </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </ScreenLayout>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.white,
   },
   scrollContent: {
     flexGrow: 1,
+    paddingBottom: Platform.OS === 'ios' ? 20 : 0,
   },
   content: {
     flex: 1,
@@ -118,9 +120,8 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     alignItems: 'center',
-    paddingTop: 80,
+    paddingTop: 40,
     paddingHorizontal: 24,
-    backgroundColor: colors.white,
   },
   title: {
     fontSize: 32,

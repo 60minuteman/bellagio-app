@@ -32,7 +32,7 @@ export const TabNavigator = () => {
         headerShown: false,
         tabBarStyle: styles.tabBar,
         tabBarActiveTintColor: colors.primary,
-        tabBarInactiveTintColor: '#9CA3AF',
+        tabBarInactiveTintColor: colors.textLight,
         tabBarLabelStyle: styles.tabLabel,
         tabBarShowLabel: true,
       }}
@@ -47,20 +47,20 @@ export const TabNavigator = () => {
         }}
       />
       <Tab.Screen 
-        name="Bookings" 
+        name="My Trips" 
         component={BookingsScreen}
         options={{
           tabBarIcon: ({ color }) => (
-            <Feather name="calendar" size={24} color={color} />
+            <Feather name="briefcase" size={24} color={color} />
           ),
         }}
       />
       <Tab.Screen 
-        name="Notifications" 
+        name="Check-In" 
         component={NotificationsScreen}
         options={{
           tabBarIcon: ({ color }) => (
-            <Feather name="bell" size={24} color={color} />
+            <Feather name="check-circle" size={24} color={color} />
           ),
         }}
       />
@@ -79,16 +79,18 @@ export const TabNavigator = () => {
 
 const styles = StyleSheet.create({
   tabBar: {
+    flexDirection: 'row',
     backgroundColor: colors.white,
+    paddingBottom: 20,
+    paddingTop: 12,
     borderTopWidth: 1,
-    borderTopColor: '#E5E7EB',
-    height: 80,
-    paddingBottom: 8,
+    borderTopColor: colors.border,
   },
   tabLabel: {
-    fontFamily: typography.medium,
     fontSize: 12,
-    marginTop: -5,
+    fontFamily: typography.medium,
+    color: colors.textLight,
+    marginTop: 4,
   },
   screen: {
     flex: 1,

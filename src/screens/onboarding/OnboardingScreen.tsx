@@ -21,7 +21,7 @@ export const OnboardingScreen = () => {
     <View style={styles.container}>
       <Image
         source={require('../../../assets/background/bg.png')}
-        style={styles.backgroundImage}
+        style={StyleSheet.absoluteFillObject}
         resizeMode="cover"
       />
       <View style={styles.content}>
@@ -58,11 +58,6 @@ export const OnboardingScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  backgroundImage: {
-    position: 'absolute',
-    width,
-    height,
   },
   content: {
     flex: 1,
