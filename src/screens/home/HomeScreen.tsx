@@ -6,14 +6,21 @@ import { LocationHeader } from '../../components/common/LocationHeader';
 import { FlightSearchForm } from '../../components/common/FlightSearchForm';
 import { SpecialFlightCard } from '../../components/common/SpecialFlightCard';
 import { ScreenLayout } from '../../components/layout/ScreenLayout';
+import { useNavigation } from '@react-navigation/native';
 
 export const HomeScreen = () => {
+  const navigation = useNavigation();
   const scrollY = new Animated.Value(0);
 
   const onScroll = Animated.event(
     [{ nativeEvent: { contentOffset: { y: scrollY } } }],
     { useNativeDriver: false }
   );
+
+  const handleSeeAll = () => {
+    // Navigate to special flights list screen instead of default auth behavior
+    navigation.navigate('SpecialFlights');
+  };
 
   return (
     <ScreenLayout 
@@ -41,18 +48,20 @@ export const HomeScreen = () => {
           <View style={styles.specialFlights}>
             <View style={styles.sectionHeader}>
               <Text style={styles.sectionTitle}>Special Flights</Text>
-              <Text style={styles.seeAll}>See All</Text>
+              <Text style={styles.seeAll} onPress={handleSeeAll}>See All</Text>
             </View>
             
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <SpecialFlightCard
                 title="Handpicked Destinations"
                 description="Discover exciting cities and hidden gems at special rates."
+                onPress={() => navigation.navigate('FlightDetails')}
               />
               <SpecialFlightCard
                 title="Handpicked Destinations"
                 description="Discover exciting cities and hidden gems at special rates."
                 style={styles.secondCard}
+                onPress={() => navigation.navigate('FlightDetails')} 
               />
             </ScrollView>
           </View>

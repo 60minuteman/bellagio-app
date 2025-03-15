@@ -40,10 +40,20 @@ export const OnboardingScreen4 = () => {
         })
       ])
     ).start();
+
+    const timer = setTimeout(() => {
+      navigation.navigate('SignUp');
+    }, 5000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   const handleNext = () => {
     navigation.navigate('SignUp');
+  };
+
+  const handleSkip = () => {
+    navigation.navigate('SignIn');
   };
 
   return (

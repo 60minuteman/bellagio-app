@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Dimensions, Text, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView, StatusBar } from 'react-native';
+import { View, StyleSheet, Dimensions, Text, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView, StatusBar, KeyboardTypeOptions } from 'react-native';
 import { Input } from '../../components/common/Input';
 import { Button } from '../../components/common/Button';
 import { colors, typography } from '../../styles/theme';
@@ -14,8 +14,9 @@ export const SignIn = () => {
   const [password, setPassword] = useState('');
   const navigation = useNavigation();
 
-  const handleSignUp = () => {
-    // TODO: Implement sign up logic
+  const handleSignIn = () => {
+    // Navigate to HomeScreen
+    navigation.navigate('MainApp');
   };
 
   const handleGoogleSignUp = () => {
@@ -32,17 +33,17 @@ export const SignIn = () => {
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         style={styles.container}
       >
-        <View style={styles.headerContainer}>
-          <Text style={styles.title}>Sign In</Text>
-          <Text style={styles.subtitle}>Enter your username and password to 
-          access your account.</Text>
-        </View>
-
         <ScrollView 
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
         >
           <View style={styles.content}>
+            <View style={styles.headerContainer}>
+              <Text style={styles.title}>Sign In</Text>
+              <Text style={styles.subtitle}>Enter your username and password to 
+              access your account.</Text>
+            </View>
+
             <View style={styles.socialButtonsContainer}>
               <SocialButton
                 type="google"
@@ -69,8 +70,10 @@ export const SignIn = () => {
                 value={email}
                 onChangeText={setEmail}
                 containerStyle={styles.inputContainer}
-                keyboardType="email-address"
-                autoCapitalize="none"
+                inputProps={{
+                  keyboardType: 'email-address' as KeyboardTypeOptions,
+                  autoCapitalize: 'none'
+                }}
               />
 
               <Input
@@ -79,7 +82,9 @@ export const SignIn = () => {
                 value={password}
                 onChangeText={setPassword}
                 containerStyle={styles.inputContainer}
-                secureTextEntry
+                inputProps={{
+                  secureTextEntry: true
+                }}
               />
               
               <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
@@ -87,15 +92,20 @@ export const SignIn = () => {
               </TouchableOpacity>
 
               <Button
-                title="Sign Up"
-                onPress={handleSignUp}
+                title="Sign In"
+                onPress={handleSignIn}
                 style={styles.button}
               />
 
               <View style={styles.signInContainer}>
                 <Text style={styles.signInText}>
                 Don't have an account?{' '}
-                  <Text style={styles.signInLink}>Sign Up</Text>
+                  <Text 
+                    style={styles.signInLink}
+                    onPress={() => navigation.navigate('SignUp')}
+                  >
+                    Sign Up
+                  </Text>
                 </Text>
               </View>
             </View>
@@ -117,6 +127,7 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     paddingHorizontal: 24,
+    paddingTop: 60, // Added padding to move content down
   },
   headerContainer: {
     alignItems: 'center',
@@ -133,7 +144,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 16,
     fontFamily: typography.regular,
-    color: colors.textSecondary,
+    color: colors.textLight,
     marginBottom: 32,
     textAlign: 'center',
   },
@@ -147,12 +158,11 @@ const styles = StyleSheet.create({
     marginTop: 24,
   },
   socialButtonsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    gap: 16,
     marginBottom: 24,
   },
   socialButton: {
-    flex: 0.48,
+    width: '100%',
   },
   orContainer: {
     flexDirection: 'row',

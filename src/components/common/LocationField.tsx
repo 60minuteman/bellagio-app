@@ -1,6 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Platform } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { StyleSheet, Text, View, TouchableOpacity, Platform, Image } from 'react-native';
 import { colors, typography } from '../../styles/theme';
 
 interface LocationFieldProps {
@@ -26,10 +25,16 @@ export const LocationField = ({
     >
       <View style={styles.locationInfo}>
         <View style={styles.leftSection}>
-          <Feather 
-            name={type === 'departure' ? "plane-takeoff" : "plane-landing"} 
-            size={Platform.OS === 'ios' ? 10 : 12}
-            color={colors.textLight} 
+          <Image 
+            source={type === 'departure' 
+              ? require('../../../assets/icons/plane-takeoff.png')
+              : require('../../../assets/icons/plane-landing.png')
+            }
+            style={{
+              width: Platform.OS === 'ios' ? 20 : 12,
+              height: Platform.OS === 'ios' ? 20 : 12,
+              tintColor: colors.textLight
+            }}
           />
           <Text style={styles.code}>{code}</Text>
         </View>

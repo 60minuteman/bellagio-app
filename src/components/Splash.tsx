@@ -1,8 +1,12 @@
-import { StyleSheet, Image, View, Dimensions, Animated } from 'react-native';
+import { StyleSheet, Image, View, Dimensions, Animated, StatusBar, Platform } from 'react-native';
 import { colors } from '../styles/theme';
 import { useEffect, useRef } from 'react';
 
-const { width, height } = Dimensions.get('window');
+const windowDimensions = Dimensions.get('window');
+const screenDimensions = Dimensions.get('screen');
+
+// Use screen dimensions to ensure full coverage including navigation bar
+const { width, height } = screenDimensions;
 
 export const Splash = () => {
   const scaleAnim = useRef(new Animated.Value(0)).current;
@@ -18,9 +22,15 @@ export const Splash = () => {
 
   return (
     <View style={styles.container}>
+      <StatusBar translucent backgroundColor="transparent" />
       <Image
         source={require('../../assets/background/Splash-bg.png')}
-        style={styles.backgroundImage}
+        style={[
+          styles.backgroundImage,
+          Platform.OS === 'android' && {
+            height: height + (screenDimensions.height - windowDimensions.height) // Add navigation bar height
+          }
+        ]}
         resizeMode="cover"
       />
       <Animated.Image
@@ -41,7 +51,11 @@ export const Splash = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: colors.white,
@@ -50,9 +64,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width,
     height,
+    top: 0,
+    left: 0,
   },
   logo: {
     width: width * 0.7,
     height: height * 0.15,
   },
-}); 
+});

@@ -7,16 +7,42 @@ interface ButtonProps {
   title: string;
   style?: ViewStyle;
   textStyle?: TextStyle;
+  variant?: 'solid' | 'outline';
+  borderColor?: string;
 }
 
-export const Button = ({ onPress, title, style, textStyle }: ButtonProps) => {
+export const Button = ({ 
+  onPress, 
+  title, 
+  style, 
+  textStyle, 
+  variant = 'solid',
+  borderColor = colors.primary 
+}: ButtonProps) => {
+  const buttonStyles = [
+    styles.button,
+    variant === 'outline' && {
+      ...styles.outlineButton,
+      borderColor: borderColor
+    },
+    style
+  ];
+
+  const textStyles = [
+    styles.text,
+    variant === 'outline' && {
+      color: borderColor
+    },
+    textStyle
+  ];
+
   return (
     <TouchableOpacity 
-      style={[styles.button, style]} 
+      style={buttonStyles}
       onPress={onPress}
       activeOpacity={0.8}
     >
-      <Text style={[styles.text, textStyle]}>{title}</Text>
+      <Text style={textStyles}>{title}</Text>
     </TouchableOpacity>
   );
 };
@@ -38,6 +64,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 3.84,
     elevation: 5,
+  },
+  outlineButton: {
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    shadowOpacity: 0,
+    elevation: 0,
   },
   text: {
     color: colors.white,

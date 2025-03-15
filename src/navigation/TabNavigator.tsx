@@ -35,6 +35,7 @@ export const TabNavigator = () => {
         tabBarInactiveTintColor: colors.textLight,
         tabBarLabelStyle: styles.tabLabel,
         tabBarShowLabel: true,
+        tabBarHideOnKeyboard: true,
       }}
     >
       <Tab.Screen 
@@ -81,10 +82,12 @@ const styles = StyleSheet.create({
   tabBar: {
     flexDirection: 'row',
     backgroundColor: colors.white,
-    paddingBottom: 20,
+    paddingBottom: Platform.OS === 'android' ? 12 : 20,
     paddingTop: 12,
     borderTopWidth: 1,
     borderTopColor: colors.border,
+    height: Platform.OS === 'android' ? 65 : 85,
+    elevation: 8, // Android shadow
   },
   tabLabel: {
     fontSize: 12,

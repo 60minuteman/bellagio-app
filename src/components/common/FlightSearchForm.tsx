@@ -6,12 +6,18 @@ import { Button } from './Button';
 import { TripTypeSelector } from './TripTypeSelector';
 import { DateSelector } from './DateSelector';
 import { LocationField } from './LocationField';
+import { useNavigation } from '@react-navigation/native';
 
 export const FlightSearchForm = () => {
+  const navigation = useNavigation();
   const [tripType, setTripType] = useState<'one-way' | 'round-trip'>('round-trip');
 
   const handleSwapLocations = () => {
     // swap logic goes here
+  };
+
+  const handleSearch = () => {
+    navigation.navigate('SelectFlight');
   };
 
   return (
@@ -79,7 +85,7 @@ export const FlightSearchForm = () => {
 
       <Button 
         title="Search for flights"
-        onPress={() => {}}
+        onPress={handleSearch}
         style={styles.searchButton}
       />
     </View>

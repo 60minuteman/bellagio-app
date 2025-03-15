@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: colors.black,
-    fontSize: 10,
+    fontSize: 14,
     fontFamily: typography.medium,
   },
 }); 

@@ -180,12 +180,11 @@ const styles = StyleSheet.create({
     marginTop: 24,
   },
   socialButtonsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    gap: 16,
     marginBottom: 24,
   },
   socialButton: {
-    flex: 0.48,
+    width: '100%',
   },
   orContainer: {
     flexDirection: 'row',

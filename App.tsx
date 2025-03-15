@@ -15,6 +15,11 @@ import { SignIn } from './src/screens/auth/SignIn';
 import { ForgotPassword } from './src/screens/auth/ForgotPassword';
 import { RootStackParamList } from './src/navigation/types';
 import { TabNavigator } from './src/navigation/TabNavigator';
+import { SelectFlight } from './src/screens/flights/SelectFlight';
+import { PassengerInfo } from './src/screens/flights/PassengerInfo';
+import { FlightSummary } from './src/screens/flights/FlightSummary';
+import { Checkout } from './src/screens/flights/Checkout';
+import { BookingSuccess } from './src/screens/flights/BookingSuccess';
 
 // Keep the splash screen visible while we fetch resources
 SplashScreen.preventAutoHideAsync();
@@ -61,6 +66,7 @@ export default function App() {
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
+          statusBarTranslucent: true,
         }}
       >
         <Stack.Screen name="Welcome" component={OnboardingScreen} />
@@ -71,6 +77,11 @@ export default function App() {
         <Stack.Screen name="SignIn" component={SignIn} />
         <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
         <Stack.Screen name="MainApp" component={TabNavigator} />
+        <Stack.Screen name="SelectFlight" component={SelectFlight} />
+        <Stack.Screen name="PassengerInfo" component={PassengerInfo} />
+        <Stack.Screen name="FlightSummary" component={FlightSummary} />
+        <Stack.Screen name="Checkout" component={Checkout} />
+        <Stack.Screen name="BookingSuccess" component={BookingSuccess} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,12 +1,7 @@
-import { StyleSheet, Text, TextInput, View, ViewStyle, TextStyle, Dimensions, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TextInput, View, ViewStyle, TextStyle, TouchableOpacity } from 'react-native';
 import { colors, typography } from '../../styles/theme';
 import { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
-
-const { width } = Dimensions.get('window');
-
-// Calculate default width relative to screen size
-const DEFAULT_WIDTH = Math.min(358, width - 32); // 32 is total horizontal padding
 
 interface InputProps {
   label?: string;
@@ -14,10 +9,13 @@ interface InputProps {
   value: string;
   onChangeText: (text: string) => void;
   containerStyle?: ViewStyle;
-  inputStyle?: ViewStyle;
+  inputStyle?: TextStyle;
+  inputContainerStyle?: ViewStyle;
   labelStyle?: TextStyle;
   placeholderTextColor?: string;
   secureTextEntry?: boolean;
+  required?: boolean;
+  keyboardType?: 'default' | 'email-address' | 'numeric' | 'phone-pad';
 }
 
 export const Input = ({
@@ -27,23 +25,32 @@ export const Input = ({
   onChangeText,
   containerStyle,
   inputStyle,
+  inputContainerStyle,
   labelStyle,
   placeholderTextColor = '#9CA3AF',
   secureTextEntry = false,
+  required = false,
+  keyboardType = 'default',
 }: InputProps) => {
   const [showPassword, setShowPassword] = useState(!secureTextEntry);
 
   return (
     <View style={[styles.container, containerStyle]}>
-      {label && <Text style={[styles.label, labelStyle]}>{label}</Text>}
-      <View style={[styles.inputContainer, inputStyle]}>
+      {label && (
+        <View style={styles.labelContainer}>
+          <Text style={[styles.label, labelStyle]}>{label}</Text>
+          {required && <Text style={styles.required}>*</Text>}
+        </View>
+      )}
+      <View style={[styles.inputContainer, inputContainerStyle]}>
         <TextInput
-          style={[styles.input, secureTextEntry && { paddingRight: 45 }]}
+          style={[styles.input, inputStyle, secureTextEntry && { paddingRight: 45 }]}
           placeholder={placeholder}
           placeholderTextColor={placeholderTextColor}
           value={value}
           onChangeText={onChangeText}
           secureTextEntry={secureTextEntry && !showPassword}
+          keyboardType={keyboardType}
         />
         {secureTextEntry && (
           <TouchableOpacity
@@ -53,7 +60,7 @@ export const Input = ({
             <Ionicons
               name={showPassword ? "eye-outline" : "eye-off-outline"}
               size={20}
-              color={colors.textSecondary}
+              color={colors.textLight}
             />
           </TouchableOpacity>
         )}
@@ -64,27 +71,37 @@ export const Input = ({
 
 const styles = StyleSheet.create({
   container: {
-    width: DEFAULT_WIDTH,
+    width: '100%',
   },
-  label: {
-    fontSize: 12,
-    fontFamily: typography.medium,
-    color: colors.black,
+  labelContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: 8,
   },
+  label: {
+    fontSize: 14,
+    fontFamily: typography.regular,
+    color: colors.text,
+  },
+  required: {
+    color: '#FF3B30',
+    marginLeft: 4,
+  },
   inputContainer: {
-    height: 40,
+    height: 48,
     borderWidth: 1,
-    borderColor: '#E5E7EB',
-    borderRadius: 8,
+    borderColor: colors.border,
+    borderRadius: 12,
     backgroundColor: colors.white,
     justifyContent: 'center',
   },
   input: {
-    paddingHorizontal: 12,
-    fontSize: 14,
+    flex: 1,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    fontSize: 16,
     fontFamily: typography.regular,
-    color: colors.black,
+    color: colors.text,
   },
   eyeIcon: {
     position: 'absolute',
