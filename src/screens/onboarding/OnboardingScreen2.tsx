@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   title: {
-    fontSize: 32,
+    fontSize: 24,
     fontFamily: typography.semiBold,
     color: '#2B3340',
     textAlign: 'center',

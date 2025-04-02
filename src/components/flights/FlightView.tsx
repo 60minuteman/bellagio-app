@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Modal, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, View, Modal, TouchableOpacity, Image, ScrollView } from 'react-native';
 import { colors, typography } from '../../styles/theme';
 import { Feather } from '@expo/vector-icons';
 import { Button } from '../common/Button';
@@ -43,88 +43,92 @@ export const FlightView = ({ visible, onClose, flight }: FlightViewProps) => {
     >
       <View style={styles.modalContainer}>
         <View style={styles.content}>
-          <View style={styles.header}>
-            <Image 
-              source={require('../../../assets/icons/logo-small.png')} 
-              style={styles.logo}
-            />
-            <Text style={styles.title}>Flight View</Text>
-            <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-              <Feather name="x" size={24} color={colors.text} />
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.flightInfo}>
-            <View style={styles.routeContainer}>
-              <View style={styles.locationContainer}>
-                <Text style={styles.cityCode}>{flight.departure.code}</Text>
-                <Text style={styles.time}>{flight.departure.time}</Text>
-              </View>
-
-              <View style={styles.flightPath}>
-                <View style={styles.dotLine} />
-                <Image 
-                  source={require('../../../assets/icons/plane-path.png')}
-                  style={styles.planeIcon}
-                />
-                <View style={styles.dotLine} />
-              </View>
-
-              <View style={styles.locationContainer}>
-                <Text style={styles.cityCode}>{flight.arrival.code}</Text>
-                <Text style={styles.time}>{flight.arrival.time}</Text>
-              </View>
+          <View style={styles.fixedHeader}>
+            <View style={styles.header}>
+              <Image 
+                source={require('../../../assets/icons/logo-small.png')} 
+                style={styles.logo}
+              />
+              <Text style={styles.title}>Flight View</Text>
+              <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+                <Feather name="x" size={24} color={colors.text} />
+              </TouchableOpacity>
             </View>
 
-            <View style={styles.infoTags}>
-              <View style={styles.tag}>
-                <Text style={styles.tagText}>{flight.duration}</Text>
+            <View style={styles.flightInfo}>
+              <View style={styles.routeContainer}>
+                <View style={styles.locationContainer}>
+                  <Text style={styles.cityCode}>{flight.departure.code}</Text>
+                  <Text style={styles.time}>{flight.departure.time}</Text>
+                </View>
+
+                <View style={styles.flightPath}>
+                  <View style={styles.dotLine} />
+                  <Image 
+                    source={require('../../../assets/icons/plane-path.png')}
+                    style={styles.planeIcon}
+                  />
+                  <View style={styles.dotLine} />
+                </View>
+
+                <View style={styles.locationContainer}>
+                  <Text style={styles.cityCode}>{flight.arrival.code}</Text>
+                  <Text style={styles.time}>{flight.arrival.time}</Text>
+                </View>
               </View>
-              <View style={[styles.tag, styles.classTag]}>
-                <Text style={styles.tagText}>{flight.class}</Text>
+
+              <View style={styles.infoTags}>
+                <View style={styles.tag}>
+                  <Text style={styles.tagText}>{flight.duration}</Text>
+                </View>
+                <View style={[styles.tag, styles.classTag]}>
+                  <Text style={styles.tagText}>{flight.class}</Text>
+                </View>
               </View>
             </View>
           </View>
 
-          <View style={styles.policyContainer}>
-            <PolicyItem 
-              icon="ticket" 
-              text="Refundable but Non-Transferrable & Non-Endorsable. Refund policy applies."
-              type="success"
-            />
-            <PolicyItem 
-              icon="briefcase" 
-              text="20kg Checked-in Baggage allowance, extra might incure additional costs"
-              type="success"
-            />
-            <PolicyItem 
-              icon="check-circle" 
-              text="Valid only on Bellagio Air."
-              type="success"
-            />
-            <PolicyItem 
-              icon="check-circle" 
-              text="Fare is guaranteed if auto-priced and ticketed in the system on the same day"
-              type="success"
-            />
-            <PolicyItem 
-              icon="check-circle" 
-              text="All travellers are required to present a government-issued form of identification before acceptance on flight."
-              type="success"
-            />
-            <PolicyItem 
-              icon="x-circle" 
-              text="Name change not permitted under any circumstance."
-              type="error"
-            />
-          </View>
-
-          <View style={styles.priceContainer}>
-            <View style={styles.priceRow}>
-              <Text style={styles.passengerText}>Adult 1</Text>
-              <Text style={styles.priceText}>₦132,382.00</Text>
+          <ScrollView style={styles.scrollContent}>
+            <View style={styles.policyContainer}>
+              <PolicyItem 
+                icon="ticket" 
+                text="Refundable but Non-Transferrable & Non-Endorsable. Refund policy applies."
+                type="success"
+              />
+              <PolicyItem 
+                icon="briefcase" 
+                text="20kg Checked-in Baggage allowance, extra might incure additional costs"
+                type="success"
+              />
+              <PolicyItem 
+                icon="check-circle" 
+                text="Valid only on Bellagio Air."
+                type="success"
+              />
+              <PolicyItem 
+                icon="check-circle" 
+                text="Fare is guaranteed if auto-priced and ticketed in the system on the same day"
+                type="success"
+              />
+              <PolicyItem 
+                icon="check-circle" 
+                text="All travellers are required to present a government-issued form of identification before acceptance on flight."
+                type="success"
+              />
+              <PolicyItem 
+                icon="x-circle" 
+                text="Name change not permitted under any circumstance."
+                type="error"
+              />
             </View>
-          </View>
+
+            <View style={styles.priceContainer}>
+              <View style={styles.priceRow}>
+                <Text style={styles.passengerText}>Adult 1</Text>
+                <Text style={styles.priceText}>₦132,382.00</Text>
+              </View>
+            </View>
+          </ScrollView>
 
           <Button 
             title="Continue"
@@ -164,10 +168,11 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
+    maxHeight: '90%',
+  },
+  fixedHeader: {
     paddingHorizontal: 20,
     paddingTop: 20,
-    paddingBottom: 34,
-    maxHeight: '90%',
   },
   header: {
     flexDirection: 'row',
@@ -249,6 +254,9 @@ const styles = StyleSheet.create({
     fontFamily: typography.medium,
     color: colors.text,
   },
+  scrollContent: {
+    paddingHorizontal: 20,
+  },
   policyContainer: {
     gap: 16,
     marginBottom: 24,
@@ -288,5 +296,8 @@ const styles = StyleSheet.create({
   },
   continueButton: {
     borderRadius: 60,
+    marginHorizontal: 20,
+    marginBottom: 34,
+    width: '90%',
   },
 }); 

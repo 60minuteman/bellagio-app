@@ -69,11 +69,12 @@ export const OnboardingScreen3 = () => {
         <Animated.View style={[styles.cardContainer, {
           transform: [
             {translateX: -154},
-            {translateY: Animated.add(cardAnimation, bounceAnimation)}
+            {translateY: Animated.add(cardAnimation, bounceAnimation)},
+            {rotate: '-90deg'}
           ]
         }]}>
           <Image
-            source={require('../../../assets/images/card.png')}
+            source={require('../../../assets/images/loyalty-cards.png')}
             style={styles.cardImage}
             resizeMode="contain"
           />
@@ -93,9 +94,9 @@ export const OnboardingScreen3 = () => {
       </View>
       <View style={styles.bottomSection}>
         <View style={styles.textContainer}>
-          <Text style={styles.title}>Explore Friendly{'\n'}Skies Program</Text>
+          <Text style={styles.title}>Explore our Friendly Skies Loyalty Program</Text>
           <Text style={styles.subtitle}>
-            Collect Miles, Points, and Memories{'\n'}with Our Loyalty Program
+            Earn points & card levels{'\n'}for flying loyal with Bellagio
           </Text>
           <View style={styles.dotsContainer}>
             <View style={[styles.dot, styles.inactiveDot]} />
@@ -149,12 +150,12 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     position: 'absolute',
-    top: '85%',
+    top: '64%',
     left: '37%',
   },
   cardImage: {
-    width: 408,
-    height: 630,
+    width: 428,
+    height: 640,
   },
   curveContainer: {
     marginTop: -60,
@@ -169,7 +170,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 32,
+    fontSize: 24,
     fontFamily: typography.semiBold,
     color: '#2B3340',
     textAlign: 'center',

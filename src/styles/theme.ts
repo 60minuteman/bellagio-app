@@ -4,9 +4,14 @@ export const colors = {
   black: '#000000',
   text: '#1F2937',
   textLight: '#6B7280',
-  border: '#E5E7EB',
+  border: '#E5E5E5',
   background: '#F8FAFC',
   headerBg: '#003B73',
+  error: '#FF3B30',
+  warning: '#F59E0B',
+  success: '#34C759',
+  primaryGradient: ['#1DA1F2', '#0077E6'],
+  warningBg: 'rgba(245, 158, 11, 0.1)',
   // Add more colors as needed
 };
 

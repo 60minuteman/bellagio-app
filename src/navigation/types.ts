@@ -12,6 +12,16 @@ export type RootStackParamList = {
   FlightSummary: undefined;
   Checkout: undefined;
   BookingSuccess: undefined;
+  SearchResults: undefined;
+  SeatSelect: undefined;
+  TierLevels: undefined;
+  Benefits: undefined;
+  PersonalDetails: undefined;
+  Address: undefined;
+  YourAccount: undefined;
+  SecureTraveler: undefined;
+  PassportAndResident: undefined;
+  EmergencyContact: undefined;
 };
 
 export type TabParamList = {

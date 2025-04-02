@@ -2,7 +2,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { View, Text, StyleSheet, Platform } from 'react-native';
 import { colors, typography } from '../styles/theme';
 import { HomeScreen } from '../screens/home/HomeScreen';
-import { Feather } from '@expo/vector-icons';
+import { Feather, MaterialIcons } from '@expo/vector-icons';
+import { CheckInScreen } from '../screens/check-in/CheckInScreen';
+import { ProfileScreen } from '../screens/profile/ProfileScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -15,13 +17,7 @@ const BookingsScreen = () => (
 
 const NotificationsScreen = () => (
   <View style={styles.screen}>
-    <Text>Notifications</Text>
-  </View>
-);
-
-const ProfileScreen = () => (
-  <View style={styles.screen}>
-    <Text>Profile</Text>
+    <Text>Check-in</Text>
   </View>
 );
 
@@ -58,10 +54,10 @@ export const TabNavigator = () => {
       />
       <Tab.Screen 
         name="Check-In" 
-        component={NotificationsScreen}
+        component={CheckInScreen}
         options={{
           tabBarIcon: ({ color }) => (
-            <Feather name="check-circle" size={24} color={color} />
+            <MaterialIcons name="check-circle" size={24} color={color} />
           ),
         }}
       />

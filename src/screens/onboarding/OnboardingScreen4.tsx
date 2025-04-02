@@ -110,7 +110,7 @@ export const OnboardingScreen4 = () => {
           />
         </View>
       </View>
-    </View>
+    </View> 
   );
 };
 
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 32,
+    fontSize: 24,
     fontFamily: typography.semiBold,
     color: '#2B3340',
     textAlign: 'center',
